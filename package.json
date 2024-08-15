@@ -15,5 +15,13 @@
   },
   "scripts": {
     "start": "cds-serve"
+  },
+  "cds": {
+    "requires": {
+      "API_OPLACCTGDOCITEMCUBE_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/external/API_OPLACCTGDOCITEMCUBE_SRV"
+      }
+    }
   }
 }
