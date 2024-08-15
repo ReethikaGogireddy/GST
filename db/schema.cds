@@ -10,25 +10,32 @@ entity accountdoc:managed, cuid {
     PostingDate: DateTime;
     @title: 'AccountingDocument'
     AccountingDocument: String(10);
-    @title: 'AccountingDocumentItem'
-    AccountingDocumentItem: String(10);
+    @title: 'AccountingDocumentType'
+    AccountingDocumentType: String(5);
     @title : 'DocumentReferenceID'
     DocumentReferenceID: String(15);
-    @title: 'CompanyCodeName'
-    CompanyCodeName: String(100);
-    @title: 'ChartOfAccounts'
-    ChartOfAccounts: String(10);
-    @title: 'AccountingDocumentItemType'
-    AccountingDocumentItemType: String(1);
-    @title: 'PostingKey'
-    PostingKey: String(2);
-    @title: 'FinancialAccountType'
-    FinancialAccountType: String(1);
-    @title: 'TransactionTypeDetermination'
-    TransactionTypeDetermination: String(3);
-    @title: 'salesDocument'
-    SalesDocument: String(10);
-    @title: 'SalesDocumentItem'
-    SalesDocumentItem: String(10);
-    
+    @title: 'Customer GSTIN'
+    CustomerGSTIN: String(15);
+    @title: 'Supplier GSTIN'
+    SupplierGSTIN: String(15);
+    @title: 'GST Amount in INR'
+    AmountInTransactionCurrency : Decimal(15,2);
+
+    di: Composition of many docitem on di.Account=$self;
 }
+
+entity docitem:managed, cuid {
+    @title : 'lineno'
+    lineno: Integer;
+    @title: 'AccountingDocumentItem'
+    AccountingDocumentItem: String(4);
+    @title:  'HSN'
+    HSN: String(10);
+    @title: 'GL Account'
+    GLAccount: String(10);
+    @title: 'TaxCode'
+    TaxCode: String(5);
+
+    Account : Association to accountdoc;
+}
+
