@@ -6,10 +6,14 @@ entity accountdoc:managed, cuid {
     CompanyCode: String(10);
     @title: 'FiscalYear'
     FiscalYear: String(4);
+    @title:  'PostingDate'
+    PostingDate: DateTime;
     @title: 'AccountingDocument'
     AccountingDocument: String(10);
     @title: 'AccountingDocumentItem'
     AccountingDocumentItem: String(10);
+    @title : 'DocumentReferenceID'
+    DocumentReferenceID: String(15);
     @title: 'CompanyCodeName'
     CompanyCodeName: String(100);
     @title: 'ChartOfAccounts'
