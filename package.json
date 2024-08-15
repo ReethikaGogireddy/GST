@@ -6,13 +6,12 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^7",
+    "@sap/cds": "^8",
     "express": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
-    "@sap/eslint-plugin-cds": "^3",
-    "eslint": "^9"
+    "@cap-js/cds-types": "^0.6"
   },
   "scripts": {
     "start": "cds-serve"
