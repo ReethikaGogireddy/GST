@@ -11,7 +11,6 @@ service satinfotech @(requires: 'authenticated-user') {
     AccountingDocumentType,
     DocumentReferenceID,
     AmountInTransactionCurrency,
-
     }
     entity tv as projection on gstapi.A_OperationalAcctgDocItemCube {
         CompanyCode,
