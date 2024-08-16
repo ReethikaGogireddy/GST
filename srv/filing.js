@@ -36,23 +36,29 @@ module.exports = cds.service.impl(async function(){
         return await gstapi.run(req.query.where(`AccountingDocumentType='RV'`));
     });
 
+
     this.before('READ', 'gstlocal', async req => {
-        const { gstlocal , remote} = this.entities;
-
-        const qry = SELECT.from(remote).columns([
-            { ref: ['CompanyCode'] },
-            { ref: ['FiscalYear'] },
-            { ref: ['AccountingDocument'] },
-            { ref: ['AccountingDocumentItem'] },
-            { ref: ['PostingDate'] },
-            { ref: ['AccountingDocumentType'] },
-            { ref: ['DocumentReferenceID'] },
-            { ref: ['AmountInTransactionCurrency'] }
-        ]).limit(1000);
-
+        const { gstlocal, remote } = this.entities;
+        
+        // Create a query to fetch data from remote
+        const qry = SELECT.from(remote)
+            .columns([
+                { ref: ['CompanyCode'] },
+                { ref: ['FiscalYear'] },
+                { ref: ['AccountingDocument'] },
+                { ref: ['AccountingDocumentItem'] },
+                { ref: ['PostingDate'] },
+                { ref: ['AccountingDocumentType'] },
+                { ref: ['DocumentReferenceID'] },
+                { ref: ['AmountInTransactionCurrency'] }
+            ])
+            .where({ AccountingDocumentType: { in: ['RV', 'DR', 'DG', 'KR', 'KG', 'RE'] } }) // Filter by accepted types
+            .limit(2000);
+    
         try {
+            // Execute the query against the external service
             let res = await gstapi.run(qry);
-
+    
             // Generate unique ID if necessary or ensure ID is present
             res = res.map(entry => ({
                 ID: entry.ID || uuidv4(), // Generate UUID if ID is not present
@@ -65,7 +71,7 @@ module.exports = cds.service.impl(async function(){
                 DocumentReferenceID: entry.DocumentReferenceID,
                 AmountInTransactionCurrency: entry.AmountInTransactionCurrency
             }));
-
+    
             // Ensure data is valid before upserting
             if (res.length > 0) {
                 const insqry = UPSERT.into(gstlocal).entries(res);
@@ -77,9 +83,6 @@ module.exports = cds.service.impl(async function(){
             console.error("Error while fetching and upserting data from gstapi to gstlocal:", error);
             throw new Error("Data fetching or upserting failed");
         }
-    });
 });
-    
-
-
+})
 
