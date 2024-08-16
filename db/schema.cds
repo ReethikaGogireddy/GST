@@ -15,7 +15,7 @@ entity gst : managed, cuid {
     @title: 'AccountingDocumentType'
     AccountingDocumentType: String(5);
     @title : 'DocumentReferenceID'
-    DocumentReferenceID: String(15);
+    DocumentReferenceID: String(20);
     @title: 'GST Amount in INR'
     AmountInTransactionCurrency : Decimal(15,2);
     Items : Composition of many gstItems on Items.id=$self;
