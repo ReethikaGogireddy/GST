@@ -6,21 +6,50 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^8",
-    "express": "^4"
+    "@cap-js/postgres": "^1.10.0",
+    "@sap-cloud-sdk/http-client": "^3.18.0",
+    "@sap-cloud-sdk/resilience": "^3.18.0",
+    "@sap/cds": "^8.1.1",
+    "@sap/cds-compiler": "^5.1.2",
+    "@sap/cds-dk": "^8.1.1",
+    "express": "^4.19.2",
+    "pg": "^8.12.0",
+    "postgres": "^3.4.4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1",
-    "@cap-js/cds-types": "^0.6"
+    "@cap-js/cds-types": "^0.6",
+    "@cap-js/sqlite": "^1"
   },
   "scripts": {
     "start": "cds-serve"
   },
   "cds": {
     "requires": {
+      "db": {
+        "impl": "@cap-js/postgres",
+        "pool": {
+          "max": 20
+        }
+      },
+      "auth": {
+        "[production]": {
+          "strategy": "JWT"
+        },
+        "[test]": {
+          "strategy": "mock"
+        }
+      },
       "API_OPLACCTGDOCITEMCUBE_SRV": {
         "kind": "odata-v2",
-        "model": "srv/external/API_OPLACCTGDOCITEMCUBE_SRV"
+        "model": "srv/external/API_OPLACCTGDOCITEMCUBE_SRV",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[production]": {
+          "credentials": {
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/API_OPLACCTGDOCITEMCUBE_SRV"
+          }
+        }
       }
     }
   }
