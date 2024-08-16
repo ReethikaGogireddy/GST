@@ -13,6 +13,14 @@ service satinfotech @(requires: 'authenticated-user') {
     AmountInTransactionCurrency,
 
     }
+    entity tv as projection on gstapi.A_OperationalAcctgDocItemCube {
+        CompanyCode,
+        FiscalYear,
+        AccountingDocument,
+        AccountingDocumentItem,
+        GLAccount,
+        TaxCode
+    }
 
     entity gstlocal as projection on db.gst;
 }
