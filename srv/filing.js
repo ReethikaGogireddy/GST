@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = cds.service.impl(async function(){
     const gstapi = await cds.connect.to('API_OPLACCTGDOCITEMCUBE_SRV');
 
-    this.on('READ','remote', async req => {
+    this.on('READ', 'remote', async req => {
         // Define the accepted AccountingDocumentType values
         const acceptedTypes = ['DR', 'DG', 'RV', 'KR', 'KG', 'RE'];
 
@@ -13,9 +13,21 @@ module.exports = cds.service.impl(async function(){
         req.query.where({ AccountingDocumentType: { in: acceptedTypes } });
 
         // Execute the query against the external service
-        return await gstapi.run(req.query);
-        //console.log(res);
-        //return await gstapi.run(req.query.where(`AccountingDocumentType='RV'`));
+        const results = await gstapi.run(req.query);
+
+        // Filter results to ensure uniqueness of CompanyCode, FiscalYear, and AccountingDocument
+        const uniqueResults = [];
+        const seen = new Set();
+
+        results.forEach(item => {
+            const uniqueKey = `${item.CompanyCode}_${item.FiscalYear}_${item.AccountingDocument}`;
+            if (!seen.has(uniqueKey)) {
+                seen.add(uniqueKey);
+                uniqueResults.push(item);
+            }
+        });
+
+        return uniqueResults;
     });
 
     this.on('READ','tv', async req => {
