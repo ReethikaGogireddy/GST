@@ -11,7 +11,6 @@ service satinfotech @(requires: 'authenticated-user') {
     AccountingDocumentType,
     DocumentReferenceID,
     AmountInTransactionCurrency,
-
     }
 
     entity gstlocal as projection on db.gst;
