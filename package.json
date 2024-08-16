@@ -8,7 +8,8 @@
   "dependencies": {
     "@sap/cds": "^8",
     "@sap/cds-compiler": "^5.1.2",
-    "express": "^4"
+    "express": "^4",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@cap-js/postgres": "^1.10.0",
