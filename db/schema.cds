@@ -24,17 +24,13 @@ entity gst : managed, cuid {
 entity gstItems : cuid, managed {
     key ID : UUID;
     id:Association to gst;
-    @title: 'Line No'
-    lineno: Integer;
     @title: 'Accounting Document Item'
     AccountingDocumentItem: String(4);
-    @title: 'HSN'
-    HSN: String(10);
     @title: 'GL Account'
     GLAccount: String(10);
     @title: 'Tax Code'
     TaxCode: String(5);
-    AccountingDocumentID: String(50);
+
     gstItems_ID : Association to one gst;
 }
 

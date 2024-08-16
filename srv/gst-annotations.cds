@@ -74,24 +74,16 @@ annotate gst with @(
 
 annotate satinfotech.gstItems with @(
     UI.LineItem: [
-            { Label: 'Line No', Value: lineno },
             { Label: 'Accounting Document Item', Value: AccountingDocumentItem },
-            { Label: 'HSN', Value: HSN },
             { Label: 'GL Account', Value: GLAccount },
             { Label: 'Tax Code', Value: TaxCode },
-            { Label: 'GST Items ID', Value: gstItems_ID_ID },
-            { Label: 'AccountingDocumentID',Value: AccountingDocumentID},
     ],
     UI.FieldGroup #gstItemsInformation : {
         $Type : 'UI.FieldGroupType',
         Data : [
-            { Label: 'Line No', Value: lineno },
             { Label: 'Accounting Document Item', Value: AccountingDocumentItem },
-            { Label: 'HSN', Value: HSN },
             { Label: 'GL Account', Value: GLAccount },
             { Label: 'Tax Code', Value: TaxCode },
-            { Label: 'GST Items ID', Value: gstItems_ID_ID },
-            { Label: 'AccountingDocumentID',Value: AccountingDocumentID},
         ]
     },
     UI.Facets: [
