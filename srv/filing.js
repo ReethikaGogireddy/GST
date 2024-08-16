@@ -19,15 +19,8 @@ module.exports = cds.service.impl(async function(){
 
     this.on('READ','tv', async req => {
         
-        const acceptedTypes = ['DR', 'DG', 'RV', 'KR', 'KG', 'RE'];
-
-        // Create a WHERE clause that matches the accepted types using an OR condition
-        req.query.where({ AccountingDocumentType: { in: acceptedTypes } });
-
-        // Execute the query against the external service
-        return await gstapi.run(req.query);
         //console.log(res);
-        //return await gstapi.run(req.query.where(`AccountingDocumentType='RV'`));
+        return await gstapi.run(req.query.where(`AccountingDocumentType='RV'`));
     });
 
     })
