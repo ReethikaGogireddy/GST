@@ -21,7 +21,7 @@ entity gst : managed, cuid {
     @title: 'Accounting Document Item'
     AccountingDocumentItems:Composition of  many gstItems on AccountingDocumentItems.AccountingDocument=$self.AccountingDocument and AccountingDocumentItems.CompanyCode = $self.CompanyCode 
                                             
-   
+
 }
 
 entity gstItems : cuid, managed {
@@ -36,5 +36,4 @@ entity gstItems : cuid, managed {
     CompanyCode: String(10);
     @title: 'AccountingDocument'
     AccountingDocument: String(10);
-    }
-
+}
