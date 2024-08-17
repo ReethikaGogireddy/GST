@@ -156,5 +156,5 @@ module.exports = cds.service.impl(async function() {
             throw new Error("Data fetching or upserting failed");
         }
     
-});
+    });
 });
