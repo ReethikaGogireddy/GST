@@ -20,7 +20,6 @@ entity gst : managed, cuid {
     AmountInTransactionCurrency : Decimal(15,2);
     @title: 'Accounting Document Item'
     AccountingDocumentItems:Composition of  many gstItems on AccountingDocumentItems.AccountingDocument=$self.AccountingDocument and AccountingDocumentItems.CompanyCode = $self.CompanyCode 
-                                            
 
 }
 
