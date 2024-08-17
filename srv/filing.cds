@@ -11,17 +11,13 @@ service satinfotech @(requires: 'authenticated-user') {
     AccountingDocumentType,
     DocumentReferenceID,
     AmountInTransactionCurrency,
+    GLAccount,
+    TaxCode
     }
-    entity tv as projection on gstapi.A_OperationalAcctgDocItemCube {
-        CompanyCode,
-        FiscalYear,
-        AccountingDocument,
-        AccountingDocumentItem,
-        GLAccount,
-        TaxCode
-    }
+  
 
     entity gstlocal as projection on db.gst;
+    entity gstItems as projection on db.gstItems;   
 }
 
 annotate satinfotech.gstlocal with @odata.draft.enabled;

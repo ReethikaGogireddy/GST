@@ -1,6 +1,6 @@
-using { satinfotech.gstlocal as gst } from './filing';
+using { satinfotech } from './filing';
 
-annotate gst with @(
+annotate satinfotech.gstlocal with @(
     UI.LineItem: [
             {
                 $Type: 'UI.DataField',
@@ -67,7 +67,7 @@ annotate gst with @(
             $Type : 'UI.ReferenceFacet',
             ID : 'gstItemsFacet',
             Label : 'gst Items',
-            Target:'Items/@UI.LineItem',
+            Target:'AccountingDocumentItems/@UI.LineItem',
         },
     ],
 );
@@ -77,6 +77,7 @@ annotate satinfotech.gstItems with @(
             { Label: 'Accounting Document Item', Value: AccountingDocumentItem },
             { Label: 'GL Account', Value: GLAccount },
             { Label: 'Tax Code', Value: TaxCode },
+            { Label: 'Company Code', Value: CompanyCode }
     ],
     UI.FieldGroup #gstItemsInformation : {
         $Type : 'UI.FieldGroupType',
@@ -84,6 +85,7 @@ annotate satinfotech.gstItems with @(
             { Label: 'Accounting Document Item', Value: AccountingDocumentItem },
             { Label: 'GL Account', Value: GLAccount },
             { Label: 'Tax Code', Value: TaxCode },
+            { Label: 'Company Code', Value: CompanyCode },
         ]
     },
     UI.Facets: [

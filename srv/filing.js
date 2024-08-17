@@ -1,21 +1,14 @@
-//const { indexof } = require('@cap-js/postgres/lib/func');
 const cds = require('@sap/cds');
 const { v4: uuidv4 } = require('uuid');
 
-module.exports = cds.service.impl(async function(){
+module.exports = cds.service.impl(async function() {
     const gstapi = await cds.connect.to('API_OPLACCTGDOCITEMCUBE_SRV');
 
     this.on('READ', 'remote', async req => {
-        // Define the accepted AccountingDocumentType values
         const acceptedTypes = ['DR', 'DG', 'RV', 'KR', 'KG', 'RE'];
-
-        // Create a WHERE clause that matches the accepted types using an OR condition
         req.query.where({ AccountingDocumentType: { in: acceptedTypes } });
-
-        // Execute the query against the external service
         const results = await gstapi.run(req.query);
 
-        // Filter results to ensure uniqueness of CompanyCode, FiscalYear, and AccountingDocument
         const uniqueResults = [];
         const seen = new Set();
 
@@ -30,52 +23,36 @@ module.exports = cds.service.impl(async function(){
         return uniqueResults;
     });
 
-    this.on('READ','tv', async req => {
-        
-        //console.log(res);
-        return await gstapi.run(req.query.where(`AccountingDocumentType='RV'`));
-    });
-
-
     this.before('READ', 'gstlocal', async req => {
         const { gstlocal, remote } = this.entities;
-        
-        // Create a query to fetch data from remote
         const qry = SELECT.from(remote)
             .columns([
-                { ref: ['CompanyCode'] },
-                { ref: ['FiscalYear'] },
-                { ref: ['AccountingDocument'] },
-                { ref: ['AccountingDocumentItem'] },
-                { ref: ['PostingDate'] },
-                { ref: ['AccountingDocumentType'] },
-                { ref: ['DocumentReferenceID'] },
-                { ref: ['AmountInTransactionCurrency'] }
+                'CompanyCode',
+                'FiscalYear',
+                'AccountingDocument',
+                'AccountingDocumentItem',
+                'PostingDate',
+                'AccountingDocumentType',
+                'DocumentReferenceID',
+                'AmountInTransactionCurrency'
             ])
-            .where({ AccountingDocumentType: { in: ['RV', 'DR', 'DG', 'KR', 'KG', 'RE'] } }) // Filter by accepted types
+            .where(`AccountingDocumentType IN ('RV', 'DR', 'DG', 'RE', 'KR', 'KG')`)
             .limit(2000);
-    
+
         try {
-            // Execute the query against the external service
             let res = await gstapi.run(qry);
-    
-            // Generate unique ID if necessary or ensure ID is present
+
+            // Log the fetched data for debugging
+            console.log('Fetched Data:', res);
+
             res = res.map(entry => ({
-                ID: entry.ID || uuidv4(), // Generate UUID if ID is not present
-                CompanyCode: entry.CompanyCode,
-                FiscalYear: entry.FiscalYear,
-                AccountingDocument: entry.AccountingDocument,
-                AccountingDocumentItem: entry.AccountingDocumentItem,
-                PostingDate: entry.PostingDate,
-                AccountingDocumentType: entry.AccountingDocumentType,
-                DocumentReferenceID: entry.DocumentReferenceID,
-                AmountInTransactionCurrency: entry.AmountInTransactionCurrency
+                ID: uuidv4(), // Ensure UUID is generated
+                ...entry
             }));
-    
-            // Ensure data is valid before upserting
+
             if (res.length > 0) {
-                const insqry = UPSERT.into(gstlocal).entries(res);
-                await cds.run(insqry);
+                await cds.run(UPSERT.into(gstlocal).entries(res));
+                console.log("Data upserted successfully");
             } else {
                 console.log("No data to upsert.");
             }
@@ -83,6 +60,43 @@ module.exports = cds.service.impl(async function(){
             console.error("Error while fetching and upserting data from gstapi to gstlocal:", error);
             throw new Error("Data fetching or upserting failed");
         }
-});
-})
+    });
 
+    this.before('READ', 'gstItems', async req => {
+        const { gstItems, remote } = this.entities;
+        const qry = SELECT.from(remote)
+            .columns([
+                'AccountingDocumentItem',
+                'GLAccount',
+                'TaxCode',
+                'CompanyCode',  // Add this line
+                'AccountingDocument'  // Add this line if necessary
+            ])
+            .where(`AccountingDocumentType IN ('RV', 'DR', 'DG', 'RE', 'KR', 'KG')`) // Adjust if needed
+            .limit(2000);
+    
+        try {
+            let res = await gstapi.run(qry);
+    
+            // Log the fetched data for debugging
+            console.log('Fetched Data for gstItems:', res);
+    
+            // Ensure UUID is generated and map the result
+            res = res.map(entry => ({
+                ID: uuidv4(), // Ensure UUID is generated
+                ...entry
+            }));
+    
+            if (res.length > 0) {
+                await cds.run(UPSERT.into(gstItems).entries(res));
+                console.log("Data upserted successfully into gstItems");
+            } else {
+                console.log("No data to upsert into gstItems.");
+            }
+        } catch (error) {
+            console.error("Error while fetching and upserting data from gstapi to gstItems:", error);
+            throw new Error("Data fetching or upserting failed");
+        }
+    });
+    
+});
