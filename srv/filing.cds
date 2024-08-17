@@ -14,10 +14,9 @@ service satinfotech @(requires: 'authenticated-user') {
     GLAccount,
     TaxCode
     }
-  
 
     entity gstlocal as projection on db.gst;
-    entity gstItems as projection on db.gstItems;   
+    entity gstItems as projection on db.gstItems;
 }
 
 annotate satinfotech.gstlocal with @odata.draft.enabled;
