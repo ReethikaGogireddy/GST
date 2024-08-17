@@ -21,6 +21,7 @@ module.exports = cds.service.impl(async function() {
         // });
 
         // return uniqueResults;
+        return results;
     });
 
     this.before('READ', 'gstlocal', async req => {
