@@ -77,7 +77,8 @@ annotate satinfotech.gstItems with @(
             { Label: 'Accounting Document Item', Value: AccountingDocumentItem },
             { Label: 'GL Account', Value: GLAccount },
             { Label: 'Tax Code', Value: TaxCode },
-            { Label: 'Company Code', Value: CompanyCode }
+            { Label: 'Company Code', Value: CompanyCode },
+            { Label: 'Fiscal Year', Value: FiscalYear }
     ],
     UI.FieldGroup #gstItemsInformation : {
         $Type : 'UI.FieldGroupType',
@@ -86,6 +87,7 @@ annotate satinfotech.gstItems with @(
             { Label: 'GL Account', Value: GLAccount },
             { Label: 'Tax Code', Value: TaxCode },
             { Label: 'Company Code', Value: CompanyCode },
+            { Label: 'Fiscal Year', Value: FiscalYear }
         ]
     },
     UI.Facets: [
