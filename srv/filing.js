@@ -65,8 +65,7 @@ module.exports = cds.service.impl(async function() {
                 SELECT.from(gstlocal)
                     .columns('CompanyCode', 'FiscalYear', 'AccountingDocument')
                     .where({
-                        CompanyCode: { in: groupedData.map(r => r.CompanyCode) },
-                        FiscalYear: { in: groupedData.map(r => r.FiscalYear) },
+                        
                         AccountingDocument: { in: groupedData.map(r => r.AccountingDocument) },
     
                     })
@@ -75,8 +74,6 @@ module.exports = cds.service.impl(async function() {
             // Filter out the already existing records
             const newRecords = groupedData.filter(groupedRecord => {
                 return !existingRecords.some(existingRecord =>
-                    existingRecord.CompanyCode === groupedRecord.CompanyCode &&
-                    existingRecord.FiscalYear === groupedRecord.FiscalYear &&
                     existingRecord.AccountingDocument === groupedRecord.AccountingDocument 
                 );
             });
