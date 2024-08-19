@@ -1,0 +1,174 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "gstdata",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.14.2",
+      "toolsId": "ce2f8b56-f30a-4e62-ad1c-f2d43f68dd93"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/satinfotech/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.127.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "gstdata.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "gstlocalList",
+          "target": "gstlocalList"
+        },
+        {
+          "pattern": "gstlocal({key}):?query:",
+          "name": "gstlocalObjectPage",
+          "target": "gstlocalObjectPage"
+        },
+        {
+          "pattern": "gstlocal({key})/AccountingDocumentItems({key2}):?query:",
+          "name": "gstItemsObjectPage",
+          "target": "gstItemsObjectPage"
+        }
+      ],
+      "targets": {
+        "gstlocalList": {
+          "type": "Component",
+          "id": "gstlocalList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/gstlocal",
+              "variantManagement": "Page",
+              "navigation": {
+                "gstlocal": {
+                  "detail": {
+                    "route": "gstlocalObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "Fetch": {
+                      "press": "gstdata.ext.fetch.Fetch.fetch",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": false,
+                      "text": "Fetch"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "gstlocalObjectPage": {
+          "type": "Component",
+          "id": "gstlocalObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/gstlocal",
+              "navigation": {
+                "AccountingDocumentItems": {
+                  "detail": {
+                    "route": "gstItemsObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "gstItemsObjectPage": {
+          "type": "Component",
+          "id": "gstItemsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/gstlocal/AccountingDocumentItems"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}
