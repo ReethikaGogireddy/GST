@@ -63,7 +63,7 @@ module.exports = cds.service.impl(async function() {
             // Fetch existing records from the gstlocal table
             const existingRecords = await cds.run(
                 SELECT.from(gstlocal)
-                    .columns('CompanyCode', 'FiscalYear', 'AccountingDocument')
+                    .columns('AccountingDocument')
                     .where({
                         
                         AccountingDocument: { in: groupedData.map(r => r.AccountingDocument) },
@@ -119,26 +119,28 @@ module.exports = cds.service.impl(async function() {
                 ID: uuidv4() // Generate UUID for each record
             }));
     
+            // Log the records after adding UUIDs
+            console.log('Records with UUIDs:', recordsWithUUID);
+    
             // Fetch existing records from the gstItems table
             const existingRecords = await cds.run(
                 SELECT.from(gstItems)
-                    .columns('AccountingDocumentItem', 'CompanyCode')
+                    .columns('AccountingDocumentItem')
                     .where({
-                        AccountingDocumentItem: { in: recordsWithUUID.map(r => r.AccountingDocumentItem) },
-                        CompanyCode: { in: recordsWithUUID.map(r => r.CompanyCode) }
+                        AccountingDocumentItem: { in: recordsWithUUID.map(r => r.AccountingDocumentItem) }
                     })
             );
     
             // Convert existing records to a map for fast lookup
             const existingMap = new Map();
             existingRecords.forEach(record => {
-                const key = `${record.AccountingDocumentItem}-${record.CompanyCode}`;
+                const key = `${record.AccountingDocumentItem}`;
                 existingMap.set(key, record);
             });
     
             // Filter out records that already exist in the table
             const newRecords = recordsWithUUID.filter(record => {
-                const key = `${record.AccountingDocumentItem}-${record.CompanyCode}`;
+                const key = `${record.AccountingDocumentItem}`;
                 return !existingMap.has(key);
             });
     
@@ -153,6 +155,5 @@ module.exports = cds.service.impl(async function() {
             console.error("Error while fetching and upserting data from gstapi to gstItems:", error);
             throw new Error("Data fetching or upserting failed");
         }
-    
     });
 });
