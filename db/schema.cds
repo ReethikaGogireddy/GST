@@ -16,8 +16,7 @@ entity gst : managed, cuid {
     AccountingDocumentType: String(5);
     @title : 'DocumentReferenceID'
     DocumentReferenceID: String(20);
-    @title: 'GST Amount in INR'
-    AmountInTransactionCurrency : Decimal(15,2);
+    
     @title: 'Accounting Document Item'
     AccountingDocumentItems:Composition of  many gstItems on AccountingDocumentItems.AccountingDocument=$self.AccountingDocument and AccountingDocumentItems.FiscalYear= $self.FiscalYear
 }
@@ -36,4 +35,6 @@ entity gstItems : cuid, managed {
     AccountingDocument: String(10);
     @title: 'FiscalYear'
     FiscalYear: String(4);
+    @title: 'GST Amount in INR'
+    AmountInTransactionCurrency : Decimal(15,2);
 }

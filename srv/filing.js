@@ -33,10 +33,12 @@ module.exports = cds.service.impl(async function() {
                 'CompanyCode',
                 'FiscalYear',
                 'AccountingDocument',
+                'AccountingDocumentItem',
                 'PostingDate',
                 'AccountingDocumentType',
                 'DocumentReferenceID',
-                'AmountInTransactionCurrency'
+                'GLAccount',
+                'TaxCode'
             ])
             .where(`AccountingDocumentType IN ('RV', 'DR', 'DG', 'RE', 'KR', 'KG')`);
     
@@ -111,10 +113,11 @@ module.exports = cds.service.impl(async function() {
                 'TaxCode',
                 'CompanyCode',
                 'AccountingDocument',
-                'FiscalYear'
+                'FiscalYear',
+                'AmountInTransactionCurrency'
             )
-            .where({ AccountingDocumentType: { in: ['RV', 'DR', 'DG', 'RE', 'KR', 'KG'] } })
-            .limit(2000);
+            .where({ AccountingDocumentType: { in: ['RV', 'DR', 'DG', 'RE', 'KR', 'KG'] } });
+            //.limit(2000);
     
         try {
             let sourceRecords = await gstapi.run(qry);
