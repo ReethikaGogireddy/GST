@@ -20,7 +20,15 @@ annotate satinfotech.gstlocal with @(
             },
             {
                 $Type: 'UI.DataField',
+                Value: PostingDate
+            },
+            {
+                $Type: 'UI.DataField',
                 Value: DocumentReferenceID
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: LastChangeDate
             },
         ],
         UI.FieldGroup #gstInformation : {
@@ -44,7 +52,15 @@ annotate satinfotech.gstlocal with @(
             },
             {
                 $Type: 'UI.DataField',
+                Value: PostingDate
+            },
+            {
+                $Type: 'UI.DataField',
                 Value: DocumentReferenceID
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: LastChangeDate
             },
         
         ]
@@ -67,22 +83,23 @@ annotate satinfotech.gstlocal with @(
 
 annotate satinfotech.gstItems with @(
     UI.LineItem: [
+            { Label: 'Company Code', Value: CompanyCode },
+            { Label: 'Fiscal Year', Value: FiscalYear },
+            { Label: 'Accounting Document', Value: AccountingDocument },
             { Label: 'Accounting Document Item', Value: AccountingDocumentItem },
             { Label: 'GL Account', Value: GLAccount },
             { Label: 'Tax Code', Value: TaxCode },
-            { Label: 'Company Code', Value: CompanyCode },
-            { Label: 'Fiscal Year', Value: FiscalYear },
             { Label: 'GST Amount in INR', Value: AmountInTransactionCurrency }
-            
     ],
     UI.FieldGroup #gstItemsInformation : {
         $Type : 'UI.FieldGroupType',
         Data : [
+            { Label: 'Company Code', Value: CompanyCode },
+            { Label: 'Fiscal Year', Value: FiscalYear },
+            { Label: 'Accounting Document', Value: AccountingDocument },
             { Label: 'Accounting Document Item', Value: AccountingDocumentItem },
             { Label: 'GL Account', Value: GLAccount },
             { Label: 'Tax Code', Value: TaxCode },
-            { Label: 'Company Code', Value: CompanyCode },
-            { Label: 'Fiscal Year', Value: FiscalYear },
             { Label: 'GST Amount in INR', Value: AmountInTransactionCurrency }
         ]
     },

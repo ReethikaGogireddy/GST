@@ -38,7 +38,8 @@ module.exports = cds.service.impl(async function() {
                 'AccountingDocumentType',
                 'DocumentReferenceID',
                 'GLAccount',
-                'TaxCode'
+                'TaxCode',
+                'LastChangeDate'
             ])
             .where(`AccountingDocumentType IN ('RV', 'DR', 'DG', 'RE', 'KR', 'KG')`);
     
@@ -108,12 +109,12 @@ module.exports = cds.service.impl(async function() {
         // Fetch records from the remote source
         const qry = SELECT.from(remote)
             .columns(
+                'CompanyCode',
+                'FiscalYear',
+                'AccountingDocument',
                 'AccountingDocumentItem',
                 'GLAccount',
                 'TaxCode',
-                'CompanyCode',
-                'AccountingDocument',
-                'FiscalYear',
                 'AmountInTransactionCurrency'
             )
             .where({ AccountingDocumentType: { in: ['RV', 'DR', 'DG', 'RE', 'KR', 'KG'] } });
