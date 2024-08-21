@@ -23,7 +23,16 @@ module.exports = cds.service.impl(async function() {
         // return uniqueResults;
         return results;
     });
-
+    this.on('ListReporter',  async req => {
+        console.log("Test Action 11")
+        // const { gstlocal, remote } = this.entities;
+        await cds.tx (async () =>{
+            console.log("Test Action")
+             return true;
+        })
+        // console.log("Test")
+        return "true";
+    });
     this.before('READ', 'gstlocal', async req => {
         const { gstlocal, remote } = this.entities;
     
@@ -46,7 +55,7 @@ module.exports = cds.service.impl(async function() {
         try {
             // Fetch data from the remote API
             let res = await gstapi.run(qry);
-            console.log('Fetched Data:', res);
+            // console.log('Fetched Data:', res);
     
             // Group records by CompanyCode, FiscalYear, and AccountingDocument
             const groupMap = new Map();
@@ -124,7 +133,7 @@ module.exports = cds.service.impl(async function() {
             let sourceRecords = await gstapi.run(qry);
     
             // Log the fetched data for debugging
-            console.log('Fetched Data for gstItems:', sourceRecords);
+            // console.log('Fetched Data for gstItems:', sourceRecords);
     
             // Add UUID to each record
             const recordsWithUUID = sourceRecords.map(record => ({
@@ -133,7 +142,7 @@ module.exports = cds.service.impl(async function() {
             }));
     
             // Log the records after adding UUIDs
-            console.log('Records with UUIDs:', recordsWithUUID);
+            // console.log('Records with UUIDs:', recordsWithUUID);
     
             // Fetch existing records from the gstItems table
             const existingRecords = await cds.run(
@@ -161,7 +170,7 @@ module.exports = cds.service.impl(async function() {
             if (newRecords.length > 0) {
                 // Perform the UPSERT operation
                 await cds.run(UPSERT.into(gstItems).entries(newRecords));
-                console.log("Upserted records with UUIDs into gstItems:", newRecords);
+                // console.log("Upserted records with UUIDs into gstItems:", newRecords);
             } else {
                 console.log("No new records to upsert into gstItems.");
             }

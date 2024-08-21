@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.14.2",
-      "toolsId": "ce2f8b56-f30a-4e62-ad1c-f2d43f68dd93"
+      "toolsId": "6442f5a5-ae32-4b76-b816-444c27ee518d"
     },
     "dataSources": {
       "mainService": {
@@ -45,7 +45,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.127.0",
+      "minUI5Version": "1.127.1",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -122,12 +122,12 @@
                     "type": "ResponsiveTable"
                   },
                   "actions": {
-                    "Fetch": {
-                      "press": "gstdata.ext.fetch.Fetch.fetch",
+                    "ListReporter": {
+                      "press": "gstdata.ext.listReporter.ListReporter.FetchData",
                       "visible": true,
                       "enabled": true,
                       "requiresSelection": false,
-                      "text": "Fetch"
+                      "text": "Fetch Data"
                     }
                   }
                 }
