@@ -8,8 +8,6 @@ entity gst : managed, cuid {
     CompanyCode: String(10);
     @title: 'FiscalYear'
     FiscalYear: String(4);
-    @title:  'PostingDate'
-    PostingDate: DateTime;
     @title: 'AccountingDocument'
     AccountingDocument: String(10);
     @title: 'AccountingDocumentType'
@@ -18,7 +16,6 @@ entity gst : managed, cuid {
     DocumentReferenceID: String(20);
     @title: 'Last Change Date'
     LastChangeDate: DateTime;
-    
     @title: 'Accounting Document Item'
     AccountingDocumentItems:Composition of  many gstItems on AccountingDocumentItems.AccountingDocument=$self.AccountingDocument and AccountingDocumentItems.FiscalYear= $self.FiscalYear
 }

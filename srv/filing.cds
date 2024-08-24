@@ -7,7 +7,6 @@ service satinfotech @(requires: 'authenticated-user') {
     FiscalYear,
     AccountingDocument,
     AccountingDocumentItem,
-    PostingDate,
     AccountingDocumentType,
     DocumentReferenceID,
     AmountInTransactionCurrency,

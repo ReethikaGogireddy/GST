@@ -45,7 +45,7 @@ sap.ui.define([
                     contentType: "application/json",
                     success: function (response) {
                         // Handle successful response
-                        MessageToast.show("Batch executed successfully.");
+                        //MessageToast.show("Batch executed successfully.");
                     },
                     error: function (error) {
                         // Handle errors
