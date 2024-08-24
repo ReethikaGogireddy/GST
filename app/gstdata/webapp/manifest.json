@@ -123,7 +123,7 @@
                   },
                   "actions": {
                     "ListReporter": {
-                      "press": "gstdata.ext.listReporter.ListReporter.FetchData",
+                      "press": "gstdata.ext.listReporter.ListReporter.ListReporter",
                       "visible": true,
                       "enabled": true,
                       "requiresSelection": false,
