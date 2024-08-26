@@ -20,10 +20,6 @@ annotate satinfotech.gstlocal with @(
             },
             {
                 $Type: 'UI.DataField',
-                Value: PostingDate
-            },
-            {
-                $Type: 'UI.DataField',
                 Value: DocumentReferenceID
             },
             {
@@ -49,10 +45,6 @@ annotate satinfotech.gstlocal with @(
             {
                 $Type: 'UI.DataField',
                 Value: AccountingDocumentType
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: PostingDate
             },
             {
                 $Type: 'UI.DataField',
